@@ -1,6 +1,10 @@
 package com.dsa.array.assignment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,29 +73,85 @@ public class Assignment2 {
 			return oddCounter == 3;
 
 		}
-	 public static List<List<Integer>> minimumAbsDifference(int[] arr) {
-		// Input: arr = [4,2,1,3]
-		//		 Output: [[1,2],[2,3],[3,4]]
-		 List mainList = new ArrayList();
-		 int d=arr[0];
-		 for(int i=0;i<arr.length-1;i++) {
-			
-			 for(int j=i;j<arr.length-1;j++) {
-				
-				 if(arr[j]<arr[j+1]) {
-					 d = arr[j+1]-arr[j];
-				 }else {
-					 d= arr[j]-arr[j+1];
-				 }
-				
-					 
-				 
+	 public static int[][] transpose(int[][] matrix) {
+		 int rows = matrix.length;       
+	     int cols = matrix[0].length;
+		 int [][] arr = new int [cols][rows];
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                arr[j][i]= matrix[i][j];
+                    
+            }
+        }
+        return arr;
+		 
+	 }
+	 public static int maximumWealth(int[][] accounts) {
+		 int rows = accounts.length;       
+	     int cols = accounts[0].length;
+	     int result =0;
+		 for(int i=0;i<rows;i++) {
+             int sum =0;
+			 for(int j=0;j<cols;j++) {
+				 sum = sum+accounts[i][j];
 			 }
-			 System.out.println(d);
-			 
+			result = Math.max(result, sum);
 		 }
 		 
-		return null;
+		return result;
+	        
+	    }
+	 public static List<List<Integer>> minimumAbsDifference(int[] arr) {
+		 List<List<Integer>> res = new ArrayList();
+	        Arrays.sort(arr);
+
+	        int min = Integer.MAX_VALUE;
+	  
+	        for (int i = 0; i < arr.length - 1; i++) {
+	            int diff = arr[i + 1] - arr[i];
+	            if (diff < min) {
+	                min = diff;
+	                res.add(Arrays.asList(arr[i], arr[i + 1]));
+	            } else if (diff == min) {
+	                res.add(Arrays.asList(arr[i], arr[i + 1]));
+	            }
+	        }
+	        return res;
+ 
+		}
+	 public static int maxProfit(int[] prices) {
+		  if(prices==null || prices.length==1){
+	            return 0;
+	        }
+	         
+	       int max = Integer.MIN_VALUE;
+		        int min = prices[0];
+		        for(int i=0;i<prices.length;i++) {
+			        	
+			        if(prices[i]<min) {
+			        	min = prices[i];
+			        }else {
+			        	int profit = prices[i]-min;
+			        	max = Math.max(profit, max);
+			        }
+		        
+		    }
+		        System.out.println(min+","+max);
+		        return max==Integer.MIN_VALUE?0:max;
+	    
+	 }
+	 public static int numJewelsInStones(String jewels, String stones) {
+		char[] jewelsArr = jewels.toCharArray();
+		char[] stoneArr = stones.toCharArray();
+		int counter=0;
+		for(int i=0;i<jewelsArr.length;i++) {
+			for(int j=0;j<stoneArr.length;j++) {
+				if(jewelsArr[i]==stoneArr[j]) {
+					counter++;
+				}
+			}
+		}
+		return counter;
 	        
 	    }
 	public static void main(String[] args) {
@@ -109,9 +169,18 @@ public class Assignment2 {
 		Assignment2.runningSum(arr3);
 		int [] arr4 = {1,2,34,3,4,5,7,23,12};
 		System.out.println(Assignment2.threeConsecutiveOdds(arr4));
-		*/
+		
 		int arr5 [] = {4,2,1,3};
-		Assignment2.minimumAbsDifference(arr5);
+		System.out.println(Assignment2.minimumAbsDifference(arr5));
+		
+		int arr6 [][] = {{1,2,3},{4,5,6},{7,8,9}};
+		int arr6 [][] ={{1,2,3},{4,5,6}};
+		Assignment2.transpose(arr6);
+		int accounts [][] = {{1,2,3},{3,2,1}};
+		Assignment2.maximumWealth(accounts);
+		
+		System.out.println(Assignment2.numJewelsInStones("aA", "aAAbbbb"));
+		*/
 	}
 
 }
