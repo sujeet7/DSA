@@ -228,8 +228,9 @@ public static int maxSubarraySum(int[] arr, int k) {
     
 }
 public static int longestKSubstr(String s, int k) {
-	int i,j,ans,c;
-	i=j=ans=c=0;
+	int i,j,ans;
+	i=j=0;
+	ans=-1;
 	Map<Character,Integer> map = new HashMap<Character, Integer>();
 	char [] arr =s.toCharArray();
 	while(j<arr.length) {
@@ -238,7 +239,8 @@ public static int longestKSubstr(String s, int k) {
 		} else {
 			map.put(arr[j], 1);
 		}
-
+		if(map.size()==k)
+			ans = Math.max(ans, j - i + 1);
 		while(k < map.size()) {
 			int count = map.get(arr[i]).intValue() - 1;
 			if (count == 0) {
@@ -249,7 +251,7 @@ public static int longestKSubstr(String s, int k) {
 
 			i++;
 		}
-		ans = Math.max(ans, j - i + 1);
+		
 		j++;
 	}
 	if (i == 0 && map.size() == 1) {
@@ -259,6 +261,31 @@ public static int longestKSubstr(String s, int k) {
 	// code here
     
 }
+
+public static int maxOnes(int arr[], int k) {
+	int ans=-1;
+	int i=0;
+	int j=0;
+	int zeroCount=0;
+	while(j<arr.length) {
+		if(arr[j]==0) {
+			zeroCount++;
+		}
+		while(zeroCount>k) {
+				if(arr[i]==0) {
+				zeroCount--;
+				}
+				i++;
+			}
+			
+			ans=Math.max(ans, j-i+1);
+		j++;
+	}
+	
+	return ans;
+    // code here
+    
+}
 	public static void main(String[] args) {
 		int arr7[] = {0,0,0,0,0,0,0,0};
 		int arr8[] = {1,2,1,2,1,2,3,1,3,2};
@@ -266,15 +293,18 @@ public static int longestKSubstr(String s, int k) {
 		int matrix1[][] = {{1,3},{8,10},{2,6},{15,18}};
 		int arr9[] = {100, 200, 300, 400};
 		
-		System.out.println(matrix1);
+		//System.out.println(matrix1);
 		 //System.out.println(ArrayLeetCodeProblems1.mostFrequentEven(arr7));
 		 //System.out.println(ArrayLeetCodeProblems1.frequencySort("Aabb"));
 		 //System.out.println(ArrayLeetCodeProblems1.topKFrequent(arr8,2));
 		 //ArrayLeetCodeProblems1.rotate(matrix);
 		//System.out.println(ArrayLeetCodeProblems1.maxSubarraySum(arr9, 2));
-		//System.out.println(ArrayLeetCodeProblems1.longestKSubstr("eceba", 2));
-		int arr10[][]= {{2,4},{1,3}};
-		ArrayLeetCodeProblems1.countDays(5,arr10);
+		System.out.println(ArrayLeetCodeProblems1.longestKSubstr("eceba", 2));
+		//int arr10[][]= {{2,4},{1,3}};
+		//ArrayLeetCodeProblems1.countDays(5,arr10);
+		//int arr11[] = {1, 0, 0, 1, 0, 1, 0, 1};
+		//System.out.println(ArrayLeetCodeProblems1.maxOnes(arr11, 2));
+		
 
 	}
 
